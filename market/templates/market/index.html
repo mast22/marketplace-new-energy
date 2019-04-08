@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Маркетплейс{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'market/market.css' %}">
+{% endblock %}
+
+{% block content %}
+<table class="table table-sm  items-table">
+    <thead>
+        <tr>
+            <th scope="col">Информация</th>
+            <th scope="col">Владелец</th>
+            <th scope="col">Населённый пункт</th>
+            <th scope="col">Ориетировочная цена</th>
+            <th scope="col">Мощность</th>
+            <th scope="col">Количество предложений</th>
+            <th scope="col">Дата оглашения победителя</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>
+                <div class="add-info first">
+                    <span class="contract_id">Номер документа: {{ item.contract_id }}</span>
+                    <span class="date_added">Дата размещения: {{ item.date_added }}</span>
+                </div>
+                <a href="{% url 'market:detail' item.id %}">
+                    {{ item.name }}
+                </a>
+                <div class="add-info last">
+                    <span class="contract_id">Конечный срок исполнения: {{ item.deadline }}</span>
+                </div>
+            </td>
+            <td>
+                <a href="{% url 'users:user' item.owner.id %}">{{ item.owner }}</a>
+            </td>
+            <td>
+                <span>{{ item.locality }}</span><br>
+                <span>{{ item.get_region_display }}</span>
+            </td>
+            <td>{{ item.oriented_price }}</td>
+            <td>{{ item.power }}</td>
+            <td>{{ item.offer_set.count }}</td>
+            <td>22 апреля 2019 г.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

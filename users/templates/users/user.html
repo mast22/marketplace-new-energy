@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'users/users.css' %}">
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'users:settings' %}" class="btn btn-primary">
+    Настройки профиля
+</a>
+<h3 class="mt-5">{{ User }}</h3>
+<table class="table">
+    <tbody>
+        <tr>
+            <th scope="row">Email</th>
+            <td>{{ User.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Категория</th>
+            <td>
+                {% if User.person == 'individual' %}
+                    Физическое лицо
+                {% elif User.person == 'entity' %}
+                    Юридическое лицо
+                {% elif not User.person %}
+                    Не задано, пожалуйста задайте <a href="{% url 'users:role_register' %}">Здесь</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Участник</th>
+            <td>
+                {% if User.role == 'custome' %}
+                    Заказчик
+                {% elif User.role == 'contractor' %}
+                    Подрядчик
+                {% elif not User.role %}
+                    Не задано, пожалуйста задайте <a href="{% url 'users:role_register' %}">Здесь</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% if user.role == 'contractor' %}
+            <tr>
+                <th>Подрядчик подтверждён</th>
+                <td>
+                    {% if user.approved %}
+                        Да
+                    {% else %}
+                        Нет
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

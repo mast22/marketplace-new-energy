@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- for i in CustomUser.objects.filter(role='contractor'): -->
+    <!-- print(i.offer_set.aggregate(rating=Avg('raiting'))) -->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Юр. название</th>
+            <th scope="col">Выполнено работ</th>
+            <th scope="col">Рейтинг</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in contractors %}
+        <tr>
+            <td>
+                <a href="{% url 'users:user' i.id %}">{{ i }}</a>
+            </td>
+            <td>
+                {{ i.offer_set.count }}
+            </td>
+            <td>5</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

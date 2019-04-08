@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Имя заявителя</th>
+            <th scope="col">Отзыв заявителя</th>
+            <th scope="col">Оценка заявителя</th>
+            <th scope="col">Ваш отчёт</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for offer in offers %}
+    <td>
+        <a href="{% url 'users:user' offer.item.owner.id %}">
+            {{ offer.item.owner }}
+        </a>
+    </td>
+    <td>
+        {{ offer.review }}
+    </td>
+    <td>
+        {{ offer.raiting }}
+    </td>
+    <td>
+        {{ offer.contractor_review }}
+    </td>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

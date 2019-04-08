@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if form.errors %}
+{% endif %}
+    <form action="{% url 'market:load_contract' %}" method="POST">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="id_contract_id">{% render_field form.contract_id.label %}</label>
+                {% render_field form.contract_id class+='form-control' value=contract_id %}
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить данные договора</button>
+    </form>
+    <form action="{% url 'market:new_work' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="contract_id" value="{{ contract_id }}">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="id_contract_date">{% render_field form.contract_date.label %}</label>
+                {% render_field form.contract_date class+='form-control' value=contract_date %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_name">{% render_field form.name.label %}</label>
+                {% render_field form.name class+='form-control' %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_extra_info">{% render_field form.extra_info.label %}</label>
+                {% render_field form.extra_info class+='form-control' %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="id_deadline">{% render_field form.deadline.label %}</label>
+                {% render_field form.deadline class+='form-control' %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="id_oriented_price">{% render_field form.oriented_price.label %}</label>
+                {% render_field form.oriented_price class+='form-control' %}
+            </div>
+            <a href="" class="btn btn-primary">Открыть калькулятор</a>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="id_power">{% render_field form.power.label %}</label>
+                {% render_field form.power class+='form-control' value=power %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="id_locality">{% render_field form.locality.label %}</label>
+                {% render_field form.locality class+='form-control' value=contract_locality %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="id_region">{% render_field form.region.label %}</label>
+                {% render_field form.region class+='form-control' %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="id_file">{% render_field form.file.label %}</label>
+                {% render_field form.file class+='form-control' %}
+                {% if contract_file %}
+                    <div class="alert alert-success" role="alert">
+                        Ваш договор будет загружен автоматически!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    {{ form }}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    <script>
+        var contract_region = {{ contract_region }};
+        var select = document.getElementById('id_region');
+        if (contract_region) {
+            select.value = contract_region;
+        }
+    </script>
+{% endblock %}

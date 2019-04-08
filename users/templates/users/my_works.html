@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table table-sm items-table">
+    {% if user.role == 'custome' %}
+    <thead>
+        <tr>
+            <th scope="col">Номер договора</th>
+            <th scope="col">Название договора</th>
+            <th scope="col">Дата договора</th>
+            <th scope="col">Конечная цена</th>
+            <th scope="col">Дата добавления</th>
+            <th scope="col">Завершенно?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+
+        <tr>
+            <td>{{ item.contract_id }}</td>
+            </a>
+            <td>
+                <a href="{% url 'market:detail' item.id %}">
+                    {{ item.name }}
+                </a>
+            </td>
+            <td>{{ item.contract_date }}</td>
+            <td>{{ item.oriented_price }}</td>
+            <td>{{ item.date_added }}</td>
+            <td>
+                {% if offer.work_done %}
+                Да
+                {% else %}
+                Нет
+                {% endif %}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+
+    {% elif user.role == 'contractor' %}
+    <thead>
+        <tr>
+            <th scope="col">Название договора</th>
+            <th scope="col">Владелец договора</th>
+            <th scope="col">Конечная цена</th>
+            <th scope="col">Дата добавления</th>
+            <th scope="col">Завершенно?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>
+                <a href="{% url 'market:detail' offer.item.id %}">{{ offer.item.name }}</a>
+
+            </td>
+            <td>
+                {{ offer.item.owner }}
+            </td>
+            <td>
+                {{ offer.price }}
+            </td>
+            <td>
+                {{ offer.date_added }}
+            </td>
+            <td>
+                {% if offer.work_done %}
+                Да
+                {% else %}
+                Нет
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endif %}
+    <!-- </tbody>
+</table> -->
+    {% endblock %}

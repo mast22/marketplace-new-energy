@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <style>
+        a {
+            color: #0091d7 !important;
+        }
+        .btn {
+            color: white !important;
+        }
+    </style>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="wrapper">
+        <a href="{% url 'index' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Сетевая компания" height="75" class="mb-3 ml-5">
+            <img src="{% static 'images/unnamed.png' %}" alt="Новая энергия" height="75" class="mb-3 ml-5">
+        </a>
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'market:contractors_raiting' %}">Рейтинг подрядчиков</a>
+                </li>
+                {% if user.role == 'custome' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'market:new_work' %}">Создать заявку</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:my_works' %}">Мои работы</a>
+                </li>
+                {% endif %}
+                {% if user.role == 'staff' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'market:uncontr' %}">Неподтверждённые подрядчики</a>
+                    </li>
+                {% endif %}
+                {% if user.role == 'contractor' %}
+                    {% if user.approved %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'market:index' %}">Маркетплейс</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:my_works' %}">Мои работы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:my_reviews' %}">Отзывы обо мне</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="user-profile">
+                {% if user.is_authenticated %}
+                    <span>{{ user.email }}</span><br>
+                    <span>
+                        <a href="{% url 'users:user' user.id %}">Профиль</a>
+                        <a href="{% url 'account_logout' %}">Выйти из аккаунта</a>
+                    </span>
+                {% else %}
+                Вы не вошли в систему <a href="{% url 'account_login' %}">Войти</a>
+                {% endif %}
+            </div>
+        </nav>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="mt-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

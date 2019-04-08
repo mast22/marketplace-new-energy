@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="alert alert-success" role="alert">
+        Пройдите опрос и мы сделаем наш сервис лучше!
+        <hr>
+        <a href="" class="btn btn-primary">Пройти опрос</a>
+    </div>
+
+{% if not user.is_authenticated %}
+
+<div class="card">
+    <div class="card-header">
+        Регистрация
+    </div>
+    <div class="card-body">
+        <p class="card-text">Присоединяйтесь к проекту и находите своих клиетов, либо подрядчиков!</p>
+        <a href="{% url 'account_signup' %}?next={% url 'users:role_register' %}" class="btn btn-primary">Регистрация</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

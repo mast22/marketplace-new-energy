@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="{% url 'market:uncontr' %}" method="POST">
+        {% csrf_token %}
+        {% for contractor in contractors %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{ contractor.id }}" id="defaultCheck1" name="choosen_contractors[]">
+            <label class="form-check-label" for="defaultCheck1">
+                {{ contractor }}
+            </label>
+        </div>
+        {% endfor %}
+        <button type='submit'>Подтвердить подрядчиков</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}О работе{% endblock %}
+
+{% block content %}
+
+
+    <h1>{{ item.name }}</h1>
+    <p>{{ item.extra_info }}</p>
+    <p>Желаемая цена работы: {{ item.oriented_price }}</p>
+    <p>Конечный срок выполнения: {{ item.deadline }}</p>
+    <p>Дата оглашения победителя: 22 апреля 2019 г.</p>
+    <p>Район: {{ item.get_region_display }}</p>
+    <p>Населённый пункт: {{ item.locality }}</p>
+    <p>Мощность: {{ item.power }}</p>
+    <p>Создатель работ: <a href="{% url 'users:user' item.owner.id %}">{{ item.owner }}</a></p>
+
+    {% if user.id != item.owner.id %}
+        <a href="{% url 'market:new_offer' item.id %}">Сделать предложение о работе</a>
+    {% endif %}
+    <hr>
+    {% if item.offer_set.all %}
+        <h3>Предложения</h1>
+    {% else %}
+        <h3>Предложения отсутствуют</h3>
+    {% endif %}
+
+    {% for offer in item.offer_set.all %}
+        <hr>
+        <h5>Подрядчик: <a href="{% url 'users:user' offer.owner.id %}">{{ offer.owner }}</a></h5>
+        <h6>Предложенная цена: {{ offer.price }}</h6>
+        {% if user == item.owner or user == offer.owner %}
+            <p>
+                <a href="{% url 'market:offer_details' item.id offer.id %}">Подробнее</a>
+            </p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

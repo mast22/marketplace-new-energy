@@ -1,0 +1,19 @@
+.item__block {
+    margin: 10px;
+}
+
+.items-table {
+    font-size: 14px;
+}
+
+.card__main {
+    padding: 15px;
+}
+
+.item__owner {
+    margin: 0;
+}
+
+.date_added {
+    margin-left: 15px;
+}

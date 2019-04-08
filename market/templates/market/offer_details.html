@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" width="30%">Стороны</th>
+            <th scope="col">Заявитель</th>
+            <th scope="col">Подрядчик</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Описание</th>
+            <td>{{ item.extra_info }}</td>
+            <td>{{ offer.desc }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Ориентировочная цена</th>
+            <td>{{ item.oriented_price }}</td>
+            <td>{{ offer.price }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    <a href="">Скачать сгенерированный договор</a>
+</p>
+
+{% if user == item.owner and not item.choosen_offer and not offer.work_done %}
+    <form action="{% url 'market:choose_contractor' item.id offer.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Выбрать данного подрядчика</button>
+    </form>
+{% endif %}
+
+{% if user == offer.owner and item.choosen_offer == offer.id %}
+    <p class="h3">Вы выбранны подрядчиком работы</p>
+{% endif %}
+
+{% if user == item.owner and not offer.work_done_custome and item.choosen_offer %}
+    <form action="{% url 'market:work_done_custome' item.id offer.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            Подтвердить завершение работы
+        </button>
+    </form>
+{% elif user == item.owner and offer.work_done_custome %}
+    <p>Вы подтвердили работу сделанной</p>
+{% endif %}
+
+{% if user == offer.owner and not offer.work_done_contractor %}
+    <form action="{% url 'market:work_done_contractor' item.id offer.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            Подтвердить завершение работы
+        </button>
+    </form>
+{% elif user == offer.owner and offer.work_done_contractor %}
+    <p>Вы подтвердили работу сделанной</p>
+{% endif %}
+
+{% if offer.work_done %}
+    Работа завершена
+{% endif %}
+
+{% if user == item.owner and offer.work_done and not offer.review and not offer.raiting %}
+    <form action="{% url 'market:review' item.id offer.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" name="review" id="" cols="30" rows="10"></textarea>
+            <select name="raiting" class="form-control">
+                <option value="">------</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Оставить отзыв
+        </button>
+    </form>
+{% endif %}
+
+{% if offer.work_done and offer.review and offer.contractor_review %}
+    <p class="h3">Отзыв заказчика:</p>
+    <p>
+        {{ offer.review }}
+    </p>
+    <p class="h3">Отчёт подрядчика:</p>
+    <p>
+        {{ offer.contractor_review }}
+    </p>
+{% endif %}
+
+{% if user == offer.owner and offer.work_done and not offer.contractor_review %}
+    <form action="{% url 'market:contractor_review' item.id offer.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" name="contractor_review" id="" cols="30" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Оставить отчёт
+        </button>
+    </form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+#wrapper {
+    margin: 20px auto;
+    width: 1200px;
+}
+
+form {
+    padding: 0 30px !important;
+}
+
+.user-profile {
+    font-size: 13px;
+}

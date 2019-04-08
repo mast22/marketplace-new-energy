@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <form action="{% url 'market:new_offer' item.id %}" method="POST" class="form-group">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="price" class="col-sm-4 col-form-label col-form-label-sm">Предложенная цена работ. (В рублях)</label>
+            <div class="col-sm-4">
+                <input type="number" name="price" id="price" class="form-control">
+            </div>
+        </div>
+        <label for="desc">Описание работ</label>
+        <textarea name="description" id="desc" class="form-control"></textarea>
+        <button type="submit" class="btn btn-primary mt-3">Сделать предложение</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p class="h3">Внимание!</p>
+<p>Для получения доступа ко всем </p>
+<form action="{% url 'users:role_register' %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        {% load widget_tweaks %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.role.label }}
+                {% render_field form.role onchange="roleChange()" class+="form-control" %}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.person.label }}
+                {% render_field form.person onchange="personChange()" class+="form-control" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.first_name.label }}
+                {% render_field form.first_name class+="form-control" %}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.last_name.label }}
+                {% render_field form.last_name class+="form-control" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                {{ form.entity_name.label }}
+                {% render_field form.entity_name class+="form-control" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.permission.label }}
+                {% render_field form.permission class+="form-control" %}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.staff.label }}
+                {% render_field form.staff class+="form-control" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.equip.label }}
+                {% render_field form.equip class+="form-control" %}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.exp.label }}
+                {% render_field form.exp class+="form-control" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.reviews.label }}
+                {% render_field form.reviews class+="form-control" %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+    </fieldset>
+</form>
+{% load static %}
+<script src="{% static 'js/role_register.js' %}">
+</script>
+{% endblock %}
