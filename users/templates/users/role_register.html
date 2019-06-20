@@ -2,7 +2,7 @@
 
 {% block content %}
 <p class="h3">Внимание!</p>
-<p>Для получения доступа ко всем </p>
+<p>Для получения полного доступа ко всем функциям системы вы должны представиться системе</p>
 <form action="{% url 'users:role_register' %}" method="POST">
     {% csrf_token %}
     <fieldset>
