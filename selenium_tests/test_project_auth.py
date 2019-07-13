@@ -2,9 +2,7 @@ from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import Select
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from users.models import CustomUser
 from django.urls import reverse
-import time
 
 
 class TestProjectAuth(StaticLiveServerTestCase):
@@ -80,4 +78,5 @@ class TestProjectAuth(StaticLiveServerTestCase):
         # И он должен быть недоступен
         # self.assertFalse(entity_input.is_enabled())
 
-        # TODO неправильная работа js
+        # Лучше переписать на jQuery
+        #

@@ -4,7 +4,12 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="btn btn-primary">Войти</button>
+    <div class="card">
+        <div class="card-body">
+            Это первоначальная регистрация, на следующем этапе вы пройдёте заполнение информации о вас или вашей компании.
+        </div>
+    </div>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 </form>
 {% endblock %}

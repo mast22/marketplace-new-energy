@@ -10,3 +10,11 @@ form {
 .user-profile {
     font-size: 13px;
 }
+
+.card {
+    margin-bottom: 16px;
+}
+
+.card-body p:last-child {
+    margin-bottom: 0;
+}
