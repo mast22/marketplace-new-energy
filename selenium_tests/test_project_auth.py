@@ -17,7 +17,7 @@ class TestProjectAuth(StaticLiveServerTestCase):
     def tearDown(self):
         self.browser.close()
 
-    def test_register_user_as_contractor(self):
+    def test_register_user(self):
         self.browser.get(self.live_server_url)
 
         # тестируем регистрацию и форму регистрации
@@ -68,15 +68,39 @@ class TestProjectAuth(StaticLiveServerTestCase):
         last_name_input = self.browser.find_element_by_id('id_last_name')
         last_name_input.send_keys('Пользователь')
 
-        # Если пользователь юр. лицо, то ему доступен ввод названия предприятия.
+        # Если пользователь юр. лицо, то ему доступен ввод названия предприятия
         entity_input = self.browser.find_element_by_id('id_entity_name')
         self.assertTrue(entity_input.is_enabled())
 
-        # Меняем на физ. лицо
-        # entity_input = self.browser.find_element_by_id('id_entity_name')
+        # Продолжаем тестирование, теперь проверяем его в качестве Заявителя
+        role_input = Select(self.browser.find_element_by_id('id_role'))
+        role_input.select_by_value('custome')
 
-        # И он должен быть недоступен
-        # self.assertFalse(entity_input.is_enabled())
+        # Нам доступен выбор лица
+        person_input = self.browser.find_element_by_id('id_person')
+        self.assertTrue(person_input.is_enabled())
 
-        # Лучше переписать на jQuery
-        #
+        # Но не доступен ввод документов
+        permission = self.browser.find_element_by_id('id_permission')
+        staff = self.browser.find_element_by_id('id_staff')
+        equip = self.browser.find_element_by_id('id_equip')
+        exp = self.browser.find_element_by_id('id_exp')
+        reviews = self.browser.find_element_by_id('id_reviews')
+
+        self.assertFalse(permission.is_enabled())
+        self.assertFalse(staff.is_enabled())
+        self.assertFalse(equip.is_enabled())
+        self.assertFalse(exp.is_enabled())
+        self.assertFalse(reviews.is_enabled())
+
+        # В зависимости от лица можно вписывать его юридическое название
+
+        entity_input = self.browser.find_element_by_id('id_entity_name')
+
+        person_input = Select(self.browser.find_element_by_id('id_person'))
+
+        person_input.select_by_value('entity')
+        self.assertTrue(entity_input.is_enabled())
+
+        person_input.select_by_value('entity')
+        self.assertTrue(entity_input.is_enabled())

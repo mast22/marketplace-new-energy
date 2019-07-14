@@ -6,7 +6,7 @@ var staff_upload = document.getElementById('id_staff');
 var equip_upload = document.getElementById('id_equip');
 var exp_upload = document.getElementById('id_exp');
 var reviews_upload = document.getElementById('id_reviews');
-var entity_name = document.getElementById('id_entity_name')
+var entity_name = document.getElementById('id_entity_name');
 
 var remove_option_from_select = function (select, option_value) {
     for (var i = 0; i < select.length; i++) {
