@@ -50,9 +50,10 @@ var personChange = function() {
         // продолжить тут
         entity_name.prop("disabled", false);
     } else if (person_select.val() == 'individual') {
-        //
+        // Очищаем и блокируем поле ввода имени юр. лица
+        entity_name.val('');
         entity_name.prop("disabled", true);
     } else {
-
+        entity_name.prop("disabled", false);
     }
 };

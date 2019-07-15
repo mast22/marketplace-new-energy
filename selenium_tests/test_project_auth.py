@@ -104,3 +104,8 @@ class TestProjectAuth(StaticLiveServerTestCase):
 
         person_input.select_by_value('entity')
         self.assertTrue(entity_input.is_enabled())
+
+        # После смены лица с физ. на отсутсвующее ввод юр.лица должен быть открыт
+        person_input.select_by_value('individual')
+        person_input.select_by_visible_text('---------')
+        self.assertTrue(entity_input.is_enabled())
