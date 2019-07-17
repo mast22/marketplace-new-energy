@@ -1,3 +1,4 @@
+$(function() {
 var role_select = $('#id_role');
 var person_select = $('#id_person');
 
@@ -57,3 +58,5 @@ var personChange = function() {
         entity_name.prop("disabled", false);
     }
 };
+
+});

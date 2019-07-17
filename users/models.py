@@ -47,36 +47,6 @@ class CustomUser(AbstractUser):
         upload_to='uploads/user/%d/%m/%Y/reviews/'
         )
 
-
-    # def can_post(self):
-    #     if self.first_name and self.last_name and self.email and self.role and self.person:
-    #         return True
-    #     return False
-    # can_post.boolean = True
-    # can_post.short_description = 'Есть доступ'
-
-    # def can_post_items(self):
-    #     if self.first_name and self.last_name and self.email and self.role == 'custome' and self.person:
-    #         return True
-    #     return False
-    # can_post_items.boolean = True
-    # can_post_items.short_description = 'Может создавать работы'
-
-    # def can_post_offers(self):
-    #     if  self.first_name and \
-    #         self.last_name and \
-    #         self.email and \
-    #         self.role == 'contractor' and \
-    #         self.person and \
-    #         self.permission and \
-    #         self.staff and \
-    #         self.exp and \
-    #         self.reviews:
-    #         return True
-    #     return False
-    # can_post_offers.boolean = True
-    # can_post_offers.short_description = 'Может создавать предложения'
-
     def __str__(self):
         """
         Если это юр. лицо, то возвращаем название его предприятия, либо имя руководителя
